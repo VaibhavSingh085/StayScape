@@ -1,0 +1,192 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<style>
+    .filters-container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #filters{
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 80%;
+    }
+
+    .filter{
+        text-align: center;
+        margin-right: 2rem;
+        margin-top: 2rem;
+        opacity: 0.7;
+        flex-shrink: 0;
+    }
+
+    .filter:hover{
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .tax-toggle{
+        flex-shrink: 0;
+        margin-left: 1rem;
+        border: 1px solid #ddd;
+        padding: 0.8rem 1rem;
+        border-radius: 1rem;
+    }
+</style>
+
+<body>
+    <div class="filters-container">
+    <div id="filters">
+        <div class="filter" id="Rooms">
+            <a href="/listings/category/Rooms" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-bed"></i></div>
+                <p>Rooms</p>
+            </a>
+        </div>
+
+        <div class="filter" id="EntireHomes">
+            <a href="/listings/category/EntireHomes" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-house"></i></div>
+                <p>Entire Homes</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Cabins">
+            <a href="/listings/category/Cabins" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-house-chimney"></i></div>
+                <p>Cabins</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Beachfront">
+            <a href="/listings/category/Beachfront" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-water"></i></div>
+                <p>Beachfront</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Mountains">
+            <a href="/listings/category/Mountains" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-mountain"></i></div>
+                <p>Mountains</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Countryside">
+            <a href="/listings/category/Countryside" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-tree"></i></div>
+                <p>Countryside</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Pools">
+            <a href="/listings/category/Pools" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-water-ladder"></i></div>
+                <p>Pools</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Camping">
+            <a href="/listings/category/Camping" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-campground"></i></div>
+                <p>Camping</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Farms">
+            <a href="/listings/category/Farms" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-tractor"></i></div>
+                <p>Farms</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Castles">
+            <a href="/listings/category/Castles" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-fort-awesome"></i></div>
+                <p>Castles</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Apartments">
+            <a href="/listings/category/Apartments" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-building"></i></div>
+                <p>Apartments</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Hotels">
+            <a href="/listings/category/Hotels" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-hotel"></i></div>
+                <p>Hotels</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Tropical">
+            <a href="/listings/category/Tropical" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-umbrella-beach"></i></div>
+                <p>Tropical</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Skiing">
+            <a href="/listings/category/Skiing" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-person-skiing"></i></div>
+                <p>Skiing</p>
+            </a>
+        </div>
+
+        <div class="filter" id="Others">
+            <a href="/listings/category/Others" style="text-decoration: none; color: inherit;">
+                <div><i class="fa-solid fa-ellipsis"></i></div>
+                <p>Others</p>
+            </a>
+        </div>
+            </div>
+
+            <div class="tax-toggle">
+                <div class="form-check-reverse form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                    <label class="form-check-label" for="switchCheckDefault">Display Total After Taxes</label>
+                </div>
+            </div>
+    </div>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(let listing of listings){ %>
+    <a href="/listings/<%=listing._id%>" class="listing-link">
+    <div class="card col listing-card">
+    <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+    <div class="card-body">
+        <p class="card-text">
+            <b><%=listing.title%></b>
+           <div class="no-tax"> &#8377; <%=listing.price.toLocaleString("en-IN")%> /night </div>
+           <div class="tax" style="display: none;"> &#8377; <%=(1.18*listing.price).toLocaleString("en-IN")%> /night </div>
+
+            
+        </p>
+    </div>
+    </div>
+    </a>
+    <% } %>
+    </div>
+
+</body>
+
+<script>
+    let taxSwitch=document.getElementById("switchCheckDefault");
+
+    taxSwitch.addEventListener("click", () => {
+        let noTax=document.querySelectorAll(".no-tax");
+        let tax=document.querySelectorAll(".tax");
+
+        noTax.forEach((element) => {
+            element.style.display = taxSwitch.checked ? "none" : "block";
+        });
+
+        tax.forEach((element) => {
+            element.style.display = taxSwitch.checked ? "block" : "none";
+        });
+    });
+</script>
